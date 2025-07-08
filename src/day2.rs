@@ -1,3 +1,5 @@
+use collar;
+
 pub fn part_1() {
     let mut result = 0;
     let data = include_str!("inputs/day2.txt");
@@ -10,7 +12,7 @@ pub fn part_1() {
             .collect();
 
         sides.sort();
-        let [l, w, h] = <[u32; 3]>::try_from(sides).ok().unwrap();
+        let [l, w, h] = collar::CollectArray::collect_array(&mut sides.iter());
         let slack = l * w;
         let surface_area = 2 * (l * w + w * h + h * l);
 

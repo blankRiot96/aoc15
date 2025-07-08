@@ -5,3 +5,12 @@ version = 4
 [[package]]
 name = "aoc15"
 version = "0.1.0"
+dependencies = [
+ "collar",
+]
+
+[[package]]
+name = "collar"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0cf5b328a98837b9435908080e5ac9021708fdbad977b3a65e1ebd009f286cd"
