@@ -1,4 +1,4 @@
-use collar;
+use collar::CollectArray;
 
 pub fn part_1() {
     let mut result = 0;
@@ -6,13 +6,13 @@ pub fn part_1() {
     let lines = data.lines();
 
     for input in lines {
-        let mut sides: Vec<u32> = input
+        let mut sides: [u32; 3] = input
             .split('x')
             .map(|side| side.parse().expect("Invalid number"))
-            .collect();
+            .collect_array::<3>();
 
         sides.sort();
-        let [l, w, h] = collar::CollectArray::collect_array(&mut sides.iter());
+        let [l, w, h] = sides;
         let slack = l * w;
         let surface_area = 2 * (l * w + w * h + h * l);
 
