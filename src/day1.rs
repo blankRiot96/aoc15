@@ -1,5 +1,3 @@
-#[allow(unused)]
-
 pub fn part_1() {
     let input = include_str!("inputs/day1.txt");
 
