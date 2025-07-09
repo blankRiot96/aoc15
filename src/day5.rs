@@ -38,7 +38,6 @@ pub fn part_1() {
 
 pub fn part_2() {
     let input = include_str!("inputs/day5.txt");
-    // let input = "qjhvhtzxzqqjkmpb";
     let mut n_nice_strings = 0;
 
     for line in input.lines() {
@@ -56,20 +55,22 @@ pub fn part_2() {
             }
         }
 
-        let mut vec2 = chars.clone();
-        vec2.remove(0);
+        let mut pair_indices: std::collections::HashMap<(char, char), usize> =
+            std::collections::HashMap::new();
 
-        let pairs: Vec<(&char, char)> = chars.iter().zip(vec2).collect();
+        for i in 0..chars.len() - 1 {
+            let pair = (chars[i], chars[i + 1]);
 
-        for (index1, pair1) in pairs.iter().enumerate() {
-            for (index2, pair2) in pairs.iter().enumerate() {
-                if pair1 == pair2 && index1 != index2 {
+            if let Some(&prev_index) = pair_indices.get(&pair) {
+                if i - prev_index >= 2 {
                     condition1 = true;
+                    break;
                 }
+            } else {
+                pair_indices.insert(pair, i);
             }
         }
 
-        // println!("{condition1} {condition2}");
         if condition1 && condition2 {
             n_nice_strings += 1;
         }
