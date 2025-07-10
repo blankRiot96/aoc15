@@ -15,3 +15,5 @@ day 7 - santa buys little bobby a set of wires and logic gates as an xmas presen
 day 8 - santa needs to store his list of gifts digitally because he ran out of space in his sleigh and somehow that relates to string literals and the number of characters they take up
 
 day 9 - santa usually is able to visit all of his locations in one night easily, but this year there are a couple extra ones. the elves give the list of locations and the distances between them, you need to find out the shortest route to take such that he visits every location and only once
+
+day 10 - the elves are playing a game called look-and-say, you need to take your input number and apply it 40 times (you're playing with them i guess?)
