@@ -24,7 +24,6 @@ pub fn part_1() {
     }
 
     let input = include_str!("inputs/day8.txt");
-    // let input = r#""abc""#;
     let mut code_chars = 0;
     let mut memory_chars = 0;
     for line in input.lines() {
@@ -32,7 +31,30 @@ pub fn part_1() {
         memory_chars += small_parser(&line).len();
     }
 
-    // println!("code_chars = {code_chars}");
-    // println!("memory_chars = {memory_chars}");
     println!("{}", code_chars - memory_chars);
+}
+
+pub fn part_2() {
+    fn get_n_increase<'t>(line: &'t str) -> i32 {
+        let mut increase = 2;
+        let mut chars = line.chars().peekable();
+
+        while let Some(c) = chars.next() {
+            match c {
+                '\\' => increase += 1,
+                '"' => increase += 1,
+                _ => continue,
+            }
+        }
+
+        increase
+    }
+
+    let input = include_str!("inputs/day8.txt");
+    let mut diff = 0;
+    for line in input.lines() {
+        diff += get_n_increase(&line);
+    }
+
+    println!("{}", diff);
 }
