@@ -2,7 +2,7 @@ use collar::CollectArray;
 
 pub fn part_1() {
     let mut result = 0;
-    let data = include_str!("inputs/day2.txt");
+    let data = include_str!("inputs/day02.txt");
     let lines = data.lines();
 
     for input in lines {
@@ -24,7 +24,7 @@ pub fn part_1() {
 
 pub fn part_2() {
     let mut result = 0;
-    let data = include_str!("inputs/day2.txt");
+    let data = include_str!("inputs/day02.txt");
     let lines = data.lines();
 
     for input in lines {

@@ -1,7 +1,7 @@
 use itertools::Itertools;
 
 pub fn part_1() {
-    let input = include_str!("inputs/day9.txt");
+    let input = include_str!("inputs/day09.txt");
     let mut distances: Vec<(&str, i32, &str)> = Vec::new();
     let mut places: Vec<&str> = Vec::new();
 
@@ -50,7 +50,7 @@ pub fn part_1() {
 }
 
 pub fn part_2() {
-    let input = include_str!("inputs/day9.txt");
+    let input = include_str!("inputs/day09.txt");
     let mut distances: Vec<(&str, i32, &str)> = Vec::new();
     let mut places: Vec<&str> = Vec::new();
 

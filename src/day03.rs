@@ -1,5 +1,5 @@
 pub fn part_1() {
-    let input = include_str!("inputs/day3.txt");
+    let input = include_str!("inputs/day03.txt");
     let mut current_location = (0, 0);
     let mut saved_locations = Vec::new();
     let mut unique_houses = 0;
@@ -46,7 +46,7 @@ pub fn part_2() {
         *unique_houses += 1;
     }
 
-    let input = include_str!("inputs/day3.txt");
+    let input = include_str!("inputs/day03.txt");
     let mut santa_location = (0, 0);
     let mut robo_location = (0, 0);
     let mut saved_locations: Vec<(i32, i32)> = Vec::new();

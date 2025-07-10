@@ -23,7 +23,7 @@ pub fn part_1() {
         result
     }
 
-    let input = include_str!("inputs/day8.txt");
+    let input = include_str!("inputs/day08.txt");
     let mut code_chars = 0;
     let mut memory_chars = 0;
     for line in input.lines() {
@@ -50,7 +50,7 @@ pub fn part_2() {
         increase
     }
 
-    let input = include_str!("inputs/day8.txt");
+    let input = include_str!("inputs/day08.txt");
     let mut diff = 0;
     for line in input.lines() {
         diff += get_n_increase(&line);

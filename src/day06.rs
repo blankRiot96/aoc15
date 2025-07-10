@@ -1,5 +1,5 @@
 pub fn part_1() {
-    let input = include_str!("inputs/day6.txt");
+    let input = include_str!("inputs/day06.txt");
 
     let mut grid =
         Box::<[Box<[i32; 1000]>; 1000]>::new(std::array::from_fn(|_| Box::new([0; 1000])));
@@ -48,7 +48,7 @@ pub fn part_1() {
 }
 
 pub fn part_2() {
-    let input = include_str!("inputs/day6.txt");
+    let input = include_str!("inputs/day06.txt");
 
     let mut grid =
         Box::<[Box<[i32; 1000]>; 1000]>::new(std::array::from_fn(|_| Box::new([0; 1000])));

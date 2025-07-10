@@ -1,5 +1,5 @@
 pub fn part_1() {
-    let input = include_str!("inputs/day5.txt");
+    let input = include_str!("inputs/day05.txt");
     let mut n_nice_strings = 0;
 
     for line in input.lines() {
@@ -37,7 +37,7 @@ pub fn part_1() {
 }
 
 pub fn part_2() {
-    let input = include_str!("inputs/day5.txt");
+    let input = include_str!("inputs/day05.txt");
     let mut n_nice_strings = 0;
 
     for line in input.lines() {

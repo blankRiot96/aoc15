@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn part_1() {
-    let input = include_str!("inputs/day7.txt");
+    let input = include_str!("inputs/day07.txt");
     let mut instructions: HashMap<&str, &str> = HashMap::new();
     for line in input.lines() {
         let (expr, dest) = line.split_once(" -> ").unwrap();
@@ -48,7 +48,7 @@ pub fn part_1() {
 }
 
 pub fn part_2() {
-    let input = include_str!("inputs/day7.txt");
+    let input = include_str!("inputs/day07.txt");
     let mut instructions: HashMap<&str, &str> = HashMap::new();
     for line in input.lines() {
         let (expr, dest) = line.split_once(" -> ").unwrap();

@@ -1,5 +1,5 @@
 pub fn part_1() {
-    let input = include_str!("inputs/day1.txt");
+    let input = include_str!("inputs/day01.txt");
 
     let floor = input.chars().fold(
         0,

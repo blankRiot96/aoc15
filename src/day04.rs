@@ -1,7 +1,7 @@
 use md5;
 
 pub fn part_1() {
-    let input = include_str!("inputs/day4.txt");
+    let input = include_str!("inputs/day04.txt");
     let mut answer = 0;
     loop {
         let hash = md5::compute(format!("{input}{answer}").as_bytes());
@@ -15,7 +15,7 @@ pub fn part_1() {
 }
 
 pub fn part_2() {
-    let input = include_str!("inputs/day4.txt");
+    let input = include_str!("inputs/day04.txt");
     let mut answer = 0;
     loop {
         let hash = md5::compute(format!("{input}{answer}").as_bytes());
