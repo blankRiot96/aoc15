@@ -8,5 +8,5 @@ mod day5;
 mod day6;
 mod day7;
 fn main() {
-    day7::part_1();
+    day7::part_2();
 }
