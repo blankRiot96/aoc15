@@ -17,3 +17,7 @@ day 8 - santa needs to store his list of gifts digitally because he ran out of s
 day 9 - santa usually is able to visit all of his locations in one night easily, but this year there are a couple extra ones. the elves give the list of locations and the distances between them, you need to find out the shortest route to take such that he visits every location and only once
 
 day 10 - the elves are playing a game called look-and-say, you need to take your input number and apply it 40 times (you're playing with them i guess?)
+
+day 11 - santa's password expired and he needs a new one. santa usually remembers his password by incrementing his original one until it is valid because the elf-security demands that it follows certain rules. you need to write a program that increments the password for him
+
+day 12 - the accounting-elves need your help traversing through their peculiar storage format and gather the sum of all numbers in it
