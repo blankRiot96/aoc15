@@ -21,3 +21,5 @@ day 10 - the elves are playing a game called look-and-say, you need to take your
 day 11 - santa's password expired and he needs a new one. santa usually remembers his password by incrementing his original one until it is valid because the elf-security demands that it follows certain rules. you need to write a program that increments the password for him
 
 day 12 - the accounting-elves need your help traversing through their peculiar storage format and gather the sum of all numbers in it
+
+day 13 - you're having a christmas dinner but every year prior it has ended in argument. this time you will find the optimal seating arrangement so that everybody is happy
