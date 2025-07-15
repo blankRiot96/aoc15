@@ -23,3 +23,5 @@ day 11 - santa's password expired and he needs a new one. santa usually remember
 day 12 - the accounting-elves need your help traversing through their peculiar storage format and gather the sum of all numbers in it
 
 day 13 - you're having a christmas dinner but every year prior it has ended in argument. this time you will find the optimal seating arrangement so that everybody is happy
+
+day 14 - the raindeers are having a race and you need to check who is winning. first by distance and then by points
