@@ -1,0 +1,70 @@
+[?1049h[22;0;0t[?1h=[H[2J[?2004h[?69$p[?2026$p[?2027$p[?2031$p[?2048$p[?u[c[?25h[?25l(B[m[H                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                [24;1H(B[m[91mError in /home/axis/.config/nvim/init.lua:(B[m[K[H[23M
+[91mE5113: Lua chunk: vim/_init_packages.lua:0: module 'vim.diagnostic' not found:(B[m  
+[91m        no field package.preload['vim.diagnostic'](B[m                              
+[91m        no file './vim/diagnostic.lua'(B[m                                          
+[91m        no file '/home/axis/neovim/.deps/usr/share/luajit-2.1/vim/diagnostic.lua
+'(B[m                                                                               
+[91m        no file '/usr/local/share/lua/5.1/vim/diagnostic.lua'(B[m                   
+[91m        no file '/usr/local/share/lua/5.1/vim/diagnostic/init.lua'(B[m              
+[91m        no file '/home/axis/neovim/.deps/usr/share/lua/5.1/vim/diagnostic.lua'(B[m  
+[91m        no file '/home/axis/neovim/.deps/usr/share/lua/5.1/vim/diagnostic/init.l
+ua'(B[m                                                                             
+[91m        no file './vim/diagnostic.so'(B[m                                           
+[91m        no file '/usr/local/lib/lua/5.1/vim/diagnostic.so'(B[m                      
+[91m        no file '/home/axis/neovim/.deps/usr/lib/lua/5.1/vim/diagnostic.so'(B[m     
+[91m        no file '/usr/local/lib/lua/5.1/loadall.so'(B[m                             
+[91m        no file './vim.so'(B[m                                                      
+[91m        no file '/usr/local/lib/lua/5.1/vim.so'(B[m                                 
+[91m        no file '/home/axis/neovim/.deps/usr/lib/lua/5.1/vim.so'(B[m                
+[91m        no file '/usr/local/lib/lua/5.1/loadall.so'(B[m                             
+[91mstack traceback:(B[m                                                                
+[91m        [C]: in function 'require'(B[m                                              
+[91m        vim/_init_packages.lua: in function '__index'(B[m                           
+[91m        /home/axis/.config/nvim/init.lua:167: in main chunk(B[m                     
+-- More --                                                                      [1 q[H[91mError in /home/axis/.config/nvim/init.lua:(B[m[K
+[91mE5113: Lua chunk: vim/_init_packages.lua:0: module 'vim.diagnostic' not found:(B[m[K
+[91m        no field package.preload['vim.diagnostic'](B[m[K
+[91m        no file './vim/diagnostic.lua'(B[m[K
+[91m        no file '/home/axis/neovim/.deps/usr/share/luajit-2.1/vim/diagnostic.lua
+'(B[m[K
+[91m        no file '/usr/local/share/lua/5.1/vim/diagnostic.lua'(B[m[K
+[91m        no file '/usr/local/share/lua/5.1/vim/diagnostic/init.lua'(B[m[K
+[91m        no file '/home/axis/neovim/.deps/usr/share/lua/5.1/vim/diagnostic.lua'(B[m[K
+[91m        no file '/home/axis/neovim/.deps/usr/share/lua/5.1/vim/diagnostic/init.l
+ua'(B[m[K
+[91m        no file './vim/diagnostic.so'(B[m[K
+[91m        no file '/usr/local/lib/lua/5.1/vim/diagnostic.so'(B[m[K
+[91m        no file '/home/axis/neovim/.deps/usr/lib/lua/5.1/vim/diagnostic.so'(B[m[K
+[91m        no file '/usr/local/lib/lua/5.1/loadall.so'(B[m[K
+[91m        no file './vim.so'(B[m[K
+[91m        no file '/usr/local/lib/lua/5.1/vim.so'(B[m[K
+[91m        no file '/home/axis/neovim/.deps/usr/lib/lua/5.1/vim.so'(B[m[K
+[91m        no file '/usr/local/lib/lua/5.1/loadall.so'(B[m[K
+[91mstack traceback:(B[m[K
+[91m        [C]: in function 'require'(B[m[K
+[91m        vim/_init_packages.lua: in function '__index'(B[m[K
+[91m        /home/axis/.config/nvim/init.lua:167: in main chunk(B[m[K
+-- More --[K[?25h[?25l[?1004h[?25h
