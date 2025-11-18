@@ -50,7 +50,7 @@ pub fn part_2() {
         let (replacement, subject) = line.split_once("=>").unwrap();
         replacements.push((subject.trim().to_string(), replacement.trim().to_string()));
     }
-    
+
     let mut molecule = calibration_molecule.to_string();
     let mut answer = 0;
 

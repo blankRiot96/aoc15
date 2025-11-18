@@ -1,9 +1,12 @@
 #![allow(unused)]
 
 pub fn part_1() {
-    let input = include_str!("inputs/day20.txt").trim().parse::<u64>().unwrap();
+    let input = include_str!("inputs/day20.txt")
+        .trim()
+        .parse::<u64>()
+        .unwrap();
     let n = (input / 10) as usize;
-    
+
     // let input = 130;
     // let n = 130;
     let mut houses: Vec<u64> = vec![0; n];
@@ -16,7 +19,6 @@ pub fn part_1() {
         }
     }
 
-
     for (index, house) in houses.iter().enumerate() {
         if house >= &input {
             let house_number = index + 1;
@@ -26,11 +28,13 @@ pub fn part_1() {
     }
 }
 
-
 pub fn part_2() {
-    let input = include_str!("inputs/day20.txt").trim().parse::<u64>().unwrap();
+    let input = include_str!("inputs/day20.txt")
+        .trim()
+        .parse::<u64>()
+        .unwrap();
     let n = input as usize;
-    
+
     // let input = 130;
     // let n = 130;
     let mut houses: Vec<u64> = vec![0; n];
@@ -44,7 +48,6 @@ pub fn part_2() {
             count += 1;
         }
     }
-
 
     for (index, house) in houses.iter().enumerate() {
         if house >= &input {
