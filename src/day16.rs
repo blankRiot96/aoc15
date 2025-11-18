@@ -62,3 +62,50 @@ pub fn part_1() {
 
     println!("{:?}", sue_number);
 }
+
+pub fn part_2() {
+    let sues = read_input("src/inputs/day16.txt".to_string());
+    let target = HashMap::from([
+        ("children".to_string(), 3),
+        ("cats".to_string(), 7),
+        ("samoyeds".to_string(), 2),
+        ("pomeranians".to_string(), 3),
+        ("akitas".to_string(), 0),
+        ("vizslas".to_string(), 0),
+        ("goldfish".to_string(), 5),
+        ("trees".to_string(), 3),
+        ("cars".to_string(), 2),
+        ("perfumes".to_string(), 1),
+    ]);
+
+    let mut sue_number = 0;
+    for (sue_index, sue) in sues.iter().enumerate() {
+        let mut is_match = true;
+        for (category, value) in target.iter() {
+            if !sue.contains_key(category) {
+                continue;
+            }
+
+            if category == "cats" || category == "trees" {
+                if sue.get(category).unwrap() <= value {
+                    is_match = false;
+                }
+            } else if category == "pomeranians" || category == "goldfish" {
+                if sue.get(category).unwrap() >= value {
+                    is_match = false;
+                }
+            } else {
+                if sue.get(category) != Some(value) {
+                    is_match = false;
+                }
+            }
+        }
+
+        if is_match {
+            sue_number = sue_index + 1;
+            break;
+        }
+    }
+
+    println!("{:?}", sue_number);
+}
