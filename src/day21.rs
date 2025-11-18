@@ -20,6 +20,7 @@ pub fn part_1() {
     println!("{}", long_sword + leather + ring_dmg_plus_one);
 }
 
+#[derive(Debug)]
 struct Item {
     cost: u32,
     damage: u32,
@@ -48,7 +49,7 @@ fn would_win(items: &Vec<&Item>) -> bool {
     boss_dmg = cmp::max(boss_dmg - player_armor, 1);
     player_dmg = cmp::max(player_dmg - boss_armor, 1);
 
-    let strikes = player_hp / boss_dmg;
+    let strikes = (player_hp / boss_dmg) + 1;
     
     strikes * player_dmg >= boss_hp
 }
@@ -62,6 +63,7 @@ fn swap_max(items: &Vec<&Item>, max_cost: &mut u32) {
         let total = total_cost(&items);
         if total > *max_cost {
             *max_cost = total;
+            println!("{:?}", items);
         }
     }   
 }
@@ -97,6 +99,17 @@ pub fn part_2() {
     for weapon in &weapons {
         let items = vec![weapon];
         swap_max(&items, &mut max_cost);
+
+        for ring in &rings {
+            let items = vec![weapon, ring];
+            swap_max(&items, &mut max_cost);
+        }
+
+        for ring_comb in rings.iter().combinations(2) {
+            let mut items = vec![weapon];
+            items.extend(ring_comb);
+            swap_max(&items, &mut max_cost);
+        }
 
         for armor in &armors {
             let items = vec![weapon, armor];
