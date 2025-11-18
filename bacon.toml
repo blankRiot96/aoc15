@@ -1,0 +1,7 @@
+[jobs.format]
+command = ["cargo", "fmt"]
+need_stdout = false
+need_stderr = true
+
+[keybindings]
+f = "job:format"

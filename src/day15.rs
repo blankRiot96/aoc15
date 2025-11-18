@@ -111,11 +111,11 @@ pub fn part_2() {
                     texture += quantities[ing] * properties["texture"];
                     calories += quantities[ing] * properties["calories"];
                 }
-                
+
                 if calories == 500 {
                     let attempt: i64 =
                         capacity.max(0) * durability.max(0) * flavor.max(0) * texture.max(0);
-    
+
                     if attempt > best {
                         best = attempt;
                     }
