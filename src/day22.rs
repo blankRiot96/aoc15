@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use itertools::{ Itertools, repeat_n };
+use itertools::{Itertools, repeat_n};
 use std::cmp;
 
 struct Player {
@@ -87,7 +87,7 @@ impl Effect for Shield {
     fn get_initiated(&self) -> bool {
         return self.initiated;
     }
-    
+
     fn set_initiated(&mut self, val: bool) {
         self.initiated = val;
     }
@@ -189,11 +189,10 @@ impl Effect for Recharge {
     }
 }
 
-pub fn part_1() {
-
+pub fn part_1<'a>() {
     let mut min_cost = 9999;
     'main: for perm in repeat_n((0..5).rev(), 15).multi_cartesian_product() {
-    // let perm = [4, 2, 3, , 0, 0, 0, 0, 0, 0, 0, 0];
+        // let perm = [4, 2, 3, , 0, 0, 0, 0, 0, 0, 0, 0];
         let mut player = Player {
             hp: 50,
             mana: 1000,
@@ -232,7 +231,7 @@ pub fn part_1() {
                 initiated: false,
             }),
         ];
-        
+
         let mut cost_acc = 0;
         println!("{perm:?}");
         'battle: for i in &perm {
@@ -244,13 +243,13 @@ pub fn part_1() {
                     }
                     if !effect.cast(&mut player, &mut boss) {
                         println!("Victory!");
-                         if cost_acc < min_cost {
+                        if cost_acc < min_cost {
                             min_cost = cost_acc;
                             continue 'battle;
-                        }       
-                         break 'main;
+                        }
+                        break 'main;
                     }
-                } 
+                }
             }
             if *i > 1 {
                 if (player.mana as i16) - (effects[*i - 2].get_cost() as i16) < 0 {
@@ -260,7 +259,7 @@ pub fn part_1() {
                 effects[*i - 2].initiate(&mut player);
                 cost_acc += effects[*i - 2].get_cost();
             } else {
-                if (player.mana as i16) - (spells[*i].get_cost() as i16 ) < 0 {
+                if (player.mana as i16) - (spells[*i].get_cost() as i16) < 0 {
                     println!("Cant afford item!");
                     continue 'battle;
                 }
@@ -275,7 +274,7 @@ pub fn part_1() {
                     break 'main;
                 }
             }
-            
+
             let diff = (boss.damage as i16) - (player.armor as i16);
             let dmg = cmp::max(diff, 1);
             if (player.hp as i16) - dmg < 0 {
@@ -285,9 +284,11 @@ pub fn part_1() {
             }
             player.hp -= dmg as u16;
         }
-        println!("boss.hp={}, cost={}, player.hp={}", boss.hp, cost_acc, player.hp);
+        println!(
+            "boss.hp={}, cost={}, player.hp={}",
+            boss.hp, cost_acc, player.hp
+        );
     }
-
 
     println!("{min_cost}");
 }
