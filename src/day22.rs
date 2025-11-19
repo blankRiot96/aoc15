@@ -1,294 +1,156 @@
 #![allow(unused)]
 
-use itertools::{Itertools, repeat_n};
 use std::cmp;
-
-struct Player {
-    hp: u16,
-    mana: u16,
-    armor: u16,
-}
+use itertools::{Itertools, repeat_n};
+use log::{trace, info, debug};
+use env_logger;
 
 struct Boss {
-    hp: u16,
-    damage: u16,
+    hp: i32,
+    dmg: i32
 }
 
-trait Spell {
-    fn get_cost(&self) -> u16;
-    fn cast(&self, player: &mut Player, boss: &mut Boss) -> bool;
+struct Player {
+    hp: i32,
+    mana: i32,
+    armor: i32,
 }
 
-trait Effect {
-    fn get_initiated(&self) -> bool;
-    fn set_initiated(&mut self, val: bool);
-    fn get_cost(&self) -> u16;
-    fn get_timer(&self) -> u16;
-    fn initiate(&mut self, player: &mut Player);
-    fn cast(&mut self, player: &mut Player, boss: &mut Boss) -> bool;
+
+struct BattleData {
+    won: bool,
+    cost: i32,
 }
 
-struct MagicMissle {
-    cost: u16,
-    damage: u16,
-}
-
-impl Spell for MagicMissle {
-    fn get_cost(&self) -> u16 {
-        return self.cost;
-    }
-
-    fn cast(&self, player: &mut Player, boss: &mut Boss) -> bool {
-        if (boss.hp as i16) - (self.damage as i16) < 0 {
-            boss.hp = 0;
-            return false;
-        }
-
-        player.mana -= self.cost;
-        boss.hp -= self.damage;
-
-        return true;
-    }
-}
-
-struct Drain {
-    cost: u16,
-    damage: u16,
-    heal: u16,
-}
-
-impl Spell for Drain {
-    fn get_cost(&self) -> u16 {
-        return self.cost;
-    }
-
-    fn cast(&self, player: &mut Player, boss: &mut Boss) -> bool {
-        if (boss.hp as i16) - (self.damage as i16) < 0 {
-            boss.hp = 0;
-            return false;
-        }
-
-        player.mana -= self.cost;
-        boss.hp -= self.damage;
-
-        player.hp += self.heal;
-        return true;
-    }
-}
-
-struct Shield {
-    cost: u16,
-    armor_increase: u16,
-    timer: u16,
-    initiated: bool,
-}
-
-impl Effect for Shield {
-    fn get_initiated(&self) -> bool {
-        return self.initiated;
-    }
-
-    fn set_initiated(&mut self, val: bool) {
-        self.initiated = val;
-    }
-
-    fn get_timer(&self) -> u16 {
-        return self.timer;
-    }
-
-    fn get_cost(&self) -> u16 {
-        return self.cost;
-    }
-
-    fn initiate(&mut self, player: &mut Player) {
-        player.mana -= self.cost;
-        self.initiated = true;
-    }
-
-    fn cast(&mut self, player: &mut Player, boss: &mut Boss) -> bool {
-        player.armor += self.armor_increase;
-        self.timer -= 1;
-
-        return true;
-    }
-}
-
-struct Poison {
-    cost: u16,
-    damage: u16,
-    timer: u16,
-    initiated: bool,
-}
-
-impl Effect for Poison {
-    fn get_initiated(&self) -> bool {
-        return self.initiated;
-    }
-
-    fn set_initiated(&mut self, val: bool) {
-        self.initiated = val;
-    }
-    fn get_timer(&self) -> u16 {
-        return self.timer;
-    }
-
-    fn get_cost(&self) -> u16 {
-        return self.cost;
-    }
-
-    fn initiate(&mut self, player: &mut Player) {
-        player.mana -= self.cost;
-        self.initiated = true;
-    }
-
-    fn cast(&mut self, player: &mut Player, boss: &mut Boss) -> bool {
-        if (boss.hp as i16) - (self.damage as i16) < 0 {
-            boss.hp = 0;
-            return false;
-        }
-
-        boss.hp -= self.damage;
-        self.timer -= 1;
-
-        return true;
-    }
-}
-
-struct Recharge {
-    cost: u16,
-    mana_increase: u16,
-    timer: u16,
-    initiated: bool,
-}
-
-impl Effect for Recharge {
-    fn get_initiated(&self) -> bool {
-        return self.initiated;
-    }
-    fn set_initiated(&mut self, val: bool) {
-        self.initiated = val;
-    }
-    fn get_timer(&self) -> u16 {
-        return self.timer;
-    }
-
-    fn get_cost(&self) -> u16 {
-        return self.cost;
-    }
-
-    fn initiate(&mut self, player: &mut Player) {
-        player.mana -= self.cost;
-        self.initiated = true;
-    }
-
-    fn cast(&mut self, player: &mut Player, boss: &mut Boss) -> bool {
-        player.mana += self.mana_increase;
-        self.timer -= 1;
-
-        return true;
-    }
-}
-
-pub fn part_1<'a>() {
-    let mut min_cost = 9999;
-    'main: for perm in repeat_n((0..5).rev(), 15).multi_cartesian_product() {
-        // let perm = [4, 2, 3, , 0, 0, 0, 0, 0, 0, 0, 0];
-        let mut player = Player {
-            hp: 50,
-            mana: 1000,
-            armor: 0,
+fn apply_effects(active_effects: &mut Vec<i32>, active_timers: &mut Vec<i32>, player: &mut Player, boss: &mut Boss) {
+    for (index, effect) in active_effects.iter().enumerate() {
+        match effect {
+            2 => { player.armor += 7; trace!("Shield gave +7 armor!"); },
+            3 => { boss.hp -= 3; trace!("Poison caused 3 damage!"); },
+            4 => { player.mana += 101; trace!("Regenerated 101 mana!"); },
+            _ => panic!("Invalid effect!"),
         };
-        let mut boss = Boss { hp: 55, damage: 8 };
-
-        let mut spells: Vec<Box<dyn Spell>> = vec![
-            Box::new(MagicMissle {
-                cost: 53,
-                damage: 4,
-            }),
-            Box::new(Drain {
-                cost: 73,
-                damage: 2,
-                heal: 2,
-            }),
-        ];
-        let mut effects: Vec<Box<dyn Effect>> = vec![
-            Box::new(Shield {
-                cost: 113,
-                armor_increase: 7,
-                timer: 6,
-                initiated: false,
-            }),
-            Box::new(Poison {
-                cost: 173,
-                damage: 3,
-                timer: 6,
-                initiated: false,
-            }),
-            Box::new(Recharge {
-                cost: 229,
-                mana_increase: 101,
-                timer: 5,
-                initiated: false,
-            }),
-        ];
-
-        let mut cost_acc = 0;
-        println!("{perm:?}");
-        'battle: for i in &perm {
-            for effect in &mut effects {
-                if effect.get_initiated() {
-                    if effect.get_timer() == 0 {
-                        effect.set_initiated(false);
-                        continue;
-                    }
-                    if !effect.cast(&mut player, &mut boss) {
-                        println!("Victory!");
-                        if cost_acc < min_cost {
-                            min_cost = cost_acc;
-                            continue 'battle;
-                        }
-                        break 'main;
-                    }
-                }
-            }
-            if *i > 1 {
-                if (player.mana as i16) - (effects[*i - 2].get_cost() as i16) < 0 {
-                    continue 'battle;
-                }
-
-                effects[*i - 2].initiate(&mut player);
-                cost_acc += effects[*i - 2].get_cost();
-            } else {
-                if (player.mana as i16) - (spells[*i].get_cost() as i16) < 0 {
-                    println!("Cant afford item!");
-                    continue 'battle;
-                }
-
-                cost_acc += spells[*i].get_cost();
-                if !spells[*i].cast(&mut player, &mut boss) {
-                    println!("Victory!");
-                    if cost_acc < min_cost {
-                        min_cost = cost_acc;
-                        break 'battle;
-                    }
-                    break 'main;
-                }
-            }
-
-            let diff = (boss.damage as i16) - (player.armor as i16);
-            let dmg = cmp::max(diff, 1);
-            if (player.hp as i16) - dmg < 0 {
-                println!("Player dies!");
-                player.hp = 0;
-                break;
-            }
-            player.hp -= dmg as u16;
-        }
-        println!(
-            "boss.hp={}, cost={}, player.hp={}",
-            boss.hp, cost_acc, player.hp
-        );
+        
+        trace!("Timer: {}", active_timers[index]);
+       active_timers[index] -= 1;
     }
 
-    println!("{min_cost}");
+    for (index, timer) in active_timers.clone().iter().enumerate() {
+        if *timer == 0 {
+            active_effects.remove(index);
+            active_timers.remove(index);
+        }
+    }
+}
+
+fn analyze_battle(moves: &Vec<i32>) -> BattleData {
+    let mut data = BattleData { won: false, cost: 0 };
+
+    let mut player = Player { hp: 50, mana: 500, armor: 0 };
+    let mut boss = Boss { hp: 55, dmg: 8 };
+
+    let mut active_effects = Vec::new();
+    let mut active_timers = Vec::new();
+
+    'battle: for mov in moves {
+        trace!("---- Player Turn ----");
+        match mov {
+            0 => {
+                trace!("Cast Magic Missle! 4 damage!");
+                player.mana -= 53;
+                data.cost += 53;
+                boss.hp -= 4;
+            },
+            1 => {
+                trace!("Cast Drain Effect! 2 Damage, 2 Heal!");
+                player.mana -= 73;
+                data.cost += 73;
+                boss.hp -= 2;
+                player.hp += 2;
+            },
+            2 => {
+                if active_effects.contains(&2) {
+                    continue 'battle;
+                }
+                
+                trace!("Started Shield Effect!");
+
+                player.mana -= 113;
+                data.cost += 113;
+                active_effects.push(2);
+                active_timers.push(6);
+            },
+            3 => {
+                if active_effects.contains(&3) {
+                    continue 'battle;
+                }
+
+                trace!("Started Poison Effect!");
+
+                player.mana -= 173;
+                data.cost += 173;
+                active_effects.push(3);
+                active_timers.push(6);
+            },
+            4 => {
+                if active_effects.contains(&4) {
+                    continue 'battle;
+                }
+                
+                trace!("Started Recharge Effect!");
+
+                player.mana -= 229;
+                data.cost += 229;
+                active_effects.push(4);
+                active_timers.push(5);
+            },
+            _ => panic!("Invalid move!"),
+        };
+        apply_effects(&mut active_effects, &mut active_timers, &mut player, &mut boss);
+
+        trace!("Boss HP: {}, Player HP: {}", boss.hp, player.hp);
+
+
+        trace!("---- Boss Turn ----");
+        apply_effects(&mut active_effects, &mut active_timers, &mut player, &mut boss);
+
+
+        let dmg = cmp::max(boss.dmg - player.armor, 1);
+        trace!("Boss deals {dmg} damage!");
+        player.hp -= dmg;
+        
+        trace!("Boss HP: {}, Player HP: {}", boss.hp, player.hp);
+
+        // End conditions
+        if boss.hp <= 0 {
+            trace!(">>> Boss Dies! <<<");
+            data.won = true;
+            break 'battle;
+        }
+        else if player.hp <= 0  || player.mana <= 0 {
+            trace!(">>> Player Dies! <<<");
+            break 'battle;
+        }
+    }
+    
+    trace!(">>> RAN OUT OF MOVES <<<");
+    return data;
+}
+
+pub fn part_1() {
+    env_logger::init();
+    let mut min_cost = i32::MAX;
+    for moves in repeat_n((0..5).rev(), 10).multi_cartesian_product() {
+    // for moves in [vec![3, 4, 4, 4, 4, 3, 0, 0, 3, 0]] {
+    // for moves in [vec![3, 0]] {
+        
+        trace!("{moves:?}");
+        let data = analyze_battle(&moves);
+        if data.won && data.cost < min_cost {
+            debug!("{moves:?}, {}", data.cost);
+            min_cost = data.cost;
+        }
+    }
+
+    info!("{min_cost}");
 }
