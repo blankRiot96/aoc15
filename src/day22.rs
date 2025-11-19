@@ -1,6 +1,7 @@
 #![allow(unused)]
 
-use itertools::Itertools;
+use itertools::{ Itertools, repeat_n };
+use std::cmp;
 
 struct Player {
     hp: u16,
@@ -39,6 +40,7 @@ impl Spell for MagicMissle {
 
     fn cast(&self, player: &mut Player, boss: &mut Boss) -> bool {
         if (boss.hp as i16) - (self.damage as i16) < 0 {
+            boss.hp = 0;
             return false;
         }
 
@@ -62,6 +64,7 @@ impl Spell for Drain {
 
     fn cast(&self, player: &mut Player, boss: &mut Boss) -> bool {
         if (boss.hp as i16) - (self.damage as i16) < 0 {
+            boss.hp = 0;
             return false;
         }
 
@@ -140,6 +143,7 @@ impl Effect for Poison {
 
     fn cast(&mut self, player: &mut Player, boss: &mut Boss) -> bool {
         if (boss.hp as i16) - (self.damage as i16) < 0 {
+            boss.hp = 0;
             return false;
         }
 
@@ -187,11 +191,12 @@ impl Effect for Recharge {
 
 pub fn part_1() {
 
-    let mut min_cost = 1000;
-    for perm in (0..5).permutations(5) {
+    let mut min_cost = 9999;
+    'main: for perm in repeat_n((0..5).rev(), 15).multi_cartesian_product() {
+    // let perm = [4, 2, 3, , 0, 0, 0, 0, 0, 0, 0, 0];
         let mut player = Player {
             hp: 50,
-            mana: 500,
+            mana: 1000,
             armor: 0,
         };
         let mut boss = Boss { hp: 55, damage: 8 };
@@ -238,10 +243,12 @@ pub fn part_1() {
                         continue;
                     }
                     if !effect.cast(&mut player, &mut boss) {
+                        println!("Victory!");
                          if cost_acc < min_cost {
                             min_cost = cost_acc;
                             continue 'battle;
-                        }                       
+                        }       
+                         break 'main;
                     }
                 } 
             }
@@ -254,17 +261,29 @@ pub fn part_1() {
                 cost_acc += effects[*i - 2].get_cost();
             } else {
                 if (player.mana as i16) - (spells[*i].get_cost() as i16 ) < 0 {
+                    println!("Cant afford item!");
                     continue 'battle;
                 }
 
                 cost_acc += spells[*i].get_cost();
                 if !spells[*i].cast(&mut player, &mut boss) {
+                    println!("Victory!");
                     if cost_acc < min_cost {
                         min_cost = cost_acc;
-                        continue 'battle;
+                        break 'battle;
                     }
+                    break 'main;
                 }
             }
+            
+            let diff = (boss.damage as i16) - (player.armor as i16);
+            let dmg = cmp::max(diff, 1);
+            if (player.hp as i16) - dmg < 0 {
+                println!("Player dies!");
+                player.hp = 0;
+                break;
+            }
+            player.hp -= dmg as u16;
         }
         println!("boss.hp={}, cost={}, player.hp={}", boss.hp, cost_acc, player.hp);
     }
