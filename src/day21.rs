@@ -38,34 +38,34 @@ impl Item {
 }
 
 fn would_win(items: &Vec<&Item>) -> bool {
-    let boss_hp =  104;
+    let boss_hp = 104;
     let mut boss_dmg = 8;
     let boss_armor = 1;
-    
+
     let player_hp = 100;
-    let mut player_dmg = items.iter().fold(0, |acc, item| { acc + item.damage }) as i32;
-    let player_armor = items.iter().fold(0, |acc, item| { acc + item.armor }) as i32;
+    let mut player_dmg = items.iter().fold(0, |acc, item| acc + item.damage) as i32;
+    let player_armor = items.iter().fold(0, |acc, item| acc + item.armor) as i32;
 
     boss_dmg = cmp::max(boss_dmg - player_armor, 1);
     player_dmg = cmp::max(player_dmg - boss_armor, 1);
 
     let strikes = (player_hp / boss_dmg) + 1;
-    
+
     strikes * player_dmg >= boss_hp
 }
 
 fn total_cost(items: &Vec<&Item>) -> u32 {
-    return items.iter().fold(0, | acc, item | { acc + item.cost });
+    return items.iter().fold(0, |acc, item| acc + item.cost);
 }
 
 fn swap_max(items: &Vec<&Item>, max_cost: &mut u32) {
-     if !would_win(&items) {
+    if !would_win(&items) {
         let total = total_cost(&items);
         if total > *max_cost {
             *max_cost = total;
             println!("{:?}", items);
         }
-    }   
+    }
 }
 
 pub fn part_2() {
@@ -76,7 +76,7 @@ pub fn part_2() {
         Item::new(40, 7, 0),
         Item::new(74, 8, 0),
     ];
-    
+
     let armors = vec![
         Item::new(13, 0, 1),
         Item::new(31, 0, 2),
@@ -89,12 +89,11 @@ pub fn part_2() {
         Item::new(25, 1, 0),
         Item::new(50, 2, 0),
         Item::new(100, 3, 0),
-
         Item::new(20, 0, 1),
         Item::new(40, 0, 2),
         Item::new(80, 0, 3),
     ];
-    
+
     let mut max_cost = 0u32;
     for weapon in &weapons {
         let items = vec![weapon];
@@ -114,7 +113,7 @@ pub fn part_2() {
         for armor in &armors {
             let items = vec![weapon, armor];
             swap_max(&items, &mut max_cost);
-    
+
             for ring in &rings {
                 let items = vec![weapon, armor, ring];
                 swap_max(&items, &mut max_cost);
