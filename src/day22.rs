@@ -191,7 +191,7 @@ pub fn part_2() {
     debug!("p2?");
     let mut min_cost = i32::MAX;
     // for moves in repeat_n((0..5).rev(), 10).multi_cartesian_product() {
-        for moves in [vec![3, 4, 2, 0, 3, 4, 2, 0, 3, 0]] {
+    for moves in [vec![3, 4, 2, 0, 3, 4, 2, 0, 3, 0]] {
         // for moves in [vec![3, 0]] {
         trace!("{moves:?}");
         let data = analyze_battle(&moves, true);
